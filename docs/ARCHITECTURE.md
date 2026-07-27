@@ -25,9 +25,9 @@ Server Actions that:
 
 ### Infrastructure (`src/infrastructure`)
 
-- **Auth:** Auth.js credentials + TOTP (`otplib`) + demo MFA bypass
-- **Persistence:** Process-local seed store (`globalThis`) suitable for demos; replace with shared DB for multi-instance production
-- **Seed:** Ghana-centric Accra/Kumasi/Tema sample data
+- **Auth:** Auth.js credentials + bcrypt (cost 12) + optional TOTP MFA (`otplib`)
+- **Persistence:** `.data/admin-db.json` file store (HMR-safe singleton); replace with Postgres for multi-instance production
+- **Bootstrap:** Owner super-admin from `ADMIN_EMAIL` / `ADMIN_PASSWORD` env — no demo marketplace data
 
 ### Presentation (`src/app`, `src/components`)
 
@@ -55,5 +55,5 @@ Payouts are explicit admin (or scheduled) releases to sellers/drivers.
 1. Replace `adminStore` with Prisma/Postgres (or Hubsom `.data` + Huber SQLite/Firebase adapters)
 2. Add webhook consumers for Huber delivery events
 3. Enforce `roleHasPermission` in a shared `requirePermission()` guard on every action
-4. Move MFA secrets to encrypted vault; remove demo bypass
+4. Store MFA secrets encrypted; require MFA for all privileged roles
 5. Add background jobs for auto-payouts and fraud rules

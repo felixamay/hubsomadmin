@@ -7,11 +7,25 @@ import { ActivityFeed } from "@/components/ui/ActivityFeed";
 
 export default function DashboardPage() {
   const stats = adminStore.getStats();
+  const orders = adminStore.getOrders();
   const streams = adminStore.getStreams().filter((s) => s.status === "live");
   const deliveries = adminStore.getDeliveries().filter((d) =>
     ["en_route_to_customer", "picked_up", "accepted", "en_route_to_pickup"].includes(d.status),
   );
   const audit = adminStore.getAuditLogs().slice(0, 6);
+
+  const revenueSeries = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const dayOrders = orders.filter(
+      (o) => new Date(o.createdAt).toDateString() === d.toDateString(),
+    );
+    return {
+      day: d.toLocaleDateString("en-GH", { weekday: "short" }),
+      revenue: dayOrders.reduce((s, o) => s + o.totalGhs, 0),
+      orders: dayOrders.length,
+    };
+  });
 
   const cards = [
     { label: "Total Users", value: formatNumber(stats.totalUsers), accent: "#0a3d5c" },
@@ -54,7 +68,7 @@ export default function DashboardPage() {
             <Typography variant="h6" fontWeight={750} sx={{ mb: 2 }}>
               Revenue & orders (7 days)
             </Typography>
-            <RevenueChart />
+            <RevenueChart data={revenueSeries} />
           </Paper>
         </Grid>
         <Grid size={{ xs: 12, lg: 4 }}>
@@ -83,6 +97,9 @@ export default function DashboardPage() {
                 Active deliveries
               </Typography>
               <Stack spacing={1}>
+                {deliveries.length === 0 && (
+                  <Typography variant="body2" color="text.secondary">No active deliveries</Typography>
+                )}
                 {deliveries.slice(0, 5).map((d) => (
                   <Box key={d.id} sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Typography variant="body2" fontWeight={650}>{d.driverName ?? "Unassigned"}</Typography>

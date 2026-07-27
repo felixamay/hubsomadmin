@@ -1,6 +1,7 @@
 import {
   computeDashboardStats,
   createSeedDatabase,
+  persistDatabase,
   type AdminDatabase,
 } from "@/infrastructure/seed/database";
 import type {
@@ -26,6 +27,7 @@ import type {
 import { nowIso, uid } from "@/lib/utils";
 
 declare global {
+  // eslint-disable-next-line no-var -- Next.js HMR singleton
   var __hubsomAdminDb: AdminDatabase | undefined;
 }
 
@@ -39,6 +41,7 @@ function getDb(): AdminDatabase {
 function mutate(mutator: (db: AdminDatabase) => void) {
   const db = getDb();
   mutator(db);
+  persistDatabase(db);
   return db;
 }
 

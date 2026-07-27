@@ -12,7 +12,6 @@ import {
   Stack,
   TextField,
   Typography,
-  Divider,
   Chip,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -20,8 +19,8 @@ import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@hubsom.com");
-  const [password, setPassword] = useState("HubsomAdmin2026!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [mfaCode, setMfaCode] = useState("");
   const [mfaRequired, setMfaRequired] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +45,7 @@ export default function LoginPage() {
         }
         if (data.mfaRequired) {
           setMfaRequired(true);
-          setError("Two-factor authentication required. Enter your 6-digit code (demo bypass: 000000).");
+          setError("Two-factor authentication required. Enter your authenticator code.");
           setLoading(false);
           return;
         }
@@ -136,11 +135,14 @@ export default function LoginPage() {
         <CardContent sx={{ p: 3 }}>
           <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
             <Chip size="small" icon={<LockOutlinedIcon />} label="RBAC" />
-            <Chip size="small" icon={<ShieldOutlinedIcon />} label="MFA" color="secondary" />
+            <Chip size="small" icon={<ShieldOutlinedIcon />} label="MFA ready" color="secondary" />
           </Stack>
 
           {error && (
-            <Alert severity={mfaRequired && !error.toLowerCase().includes("invalid") ? "info" : "error"} sx={{ mb: 2 }}>
+            <Alert
+              severity={mfaRequired && !error.toLowerCase().includes("invalid") ? "info" : "error"}
+              sx={{ mb: 2 }}
+            >
               {error}
             </Alert>
           )}
@@ -159,6 +161,7 @@ export default function LoginPage() {
                 fullWidth
                 autoComplete="username"
                 disabled={mfaRequired}
+                autoFocus
               />
               <TextField
                 label="Password"
@@ -183,7 +186,6 @@ export default function LoginPage() {
                   autoFocus
                   placeholder="6-digit code"
                   inputProps={{ maxLength: 8, inputMode: "numeric" }}
-                  helperText="Demo bypass: 000000 · or TOTP from seeded secret"
                 />
               )}
               <Button type="submit" variant="contained" size="large" disabled={loading} fullWidth>
@@ -203,13 +205,6 @@ export default function LoginPage() {
               )}
             </Stack>
           </Box>
-
-          <Divider sx={{ my: 2.5 }} />
-          <Typography variant="caption" color="text.secondary" component="div">
-            Demo Super Admin: admin@hubsom.com / HubsomAdmin2026!
-            <br />
-            MFA demo bypass: 000000
-          </Typography>
         </CardContent>
       </Card>
     </Box>

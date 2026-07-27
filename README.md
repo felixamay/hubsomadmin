@@ -42,19 +42,18 @@ Admin runs on **port 3001** so it can sit alongside Hubsom on 3000:
 - Hubsom Admin → [http://localhost:3001](http://localhost:3001)
 - Hubsom Marketplace → [http://localhost:3000](http://localhost:3000)
 
-### Demo credentials
+### Authentication
 
-| Role | Email | Password |
-|------|-------|----------|
-| Super Admin | `admin@hubsom.com` | `HubsomAdmin2026!` |
-| Finance | `finance@hubsom.com` | `FinanceAdmin2026!` |
-| Support | `support@hubsom.com` | `SupportAdmin2026!` |
-| Moderation | `moderation@hubsom.com` | `ModAdmin2026!` |
-| Operations | `operations@hubsom.com` | `OpsAdmin2026!` |
+Real credentials auth (Auth.js + bcrypt). The owner account is bootstrapped from `.env.local`:
 
-**MFA:** accounts with MFA enabled accept authenticator TOTP **or** demo bypass `000000` (`DEMO_MFA_BYPASS`).
+```
+ADMIN_EMAIL=felixames0808@gmail.com
+ADMIN_PASSWORD=…   # bcrypt-hashed on boot
+ADMIN_NAME=Felix Amesimeku
+AUTH_SECRET=…      # required
+```
 
-Seeded TOTP secret (for authenticator apps): `JBSWY3DPEHPK3PXP`.
+Operational data starts empty (no demo users/sellers/drivers). Persistence lives in `.data/admin-db.json`. MFA is optional per admin (TOTP via authenticator app when enabled).
 
 ## Modules
 

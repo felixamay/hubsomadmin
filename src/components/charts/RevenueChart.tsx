@@ -9,21 +9,22 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { Typography } from "@mui/material";
 
-const DATA = [
-  { day: "Mon", revenue: 4200, orders: 48 },
-  { day: "Tue", revenue: 5100, orders: 61 },
-  { day: "Wed", revenue: 4700, orders: 55 },
-  { day: "Thu", revenue: 6300, orders: 72 },
-  { day: "Fri", revenue: 7800, orders: 91 },
-  { day: "Sat", revenue: 9200, orders: 110 },
-  { day: "Sun", revenue: 8600, orders: 98 },
-];
+export type RevenuePoint = { day: string; revenue: number; orders: number };
 
-export function RevenueChart() {
+export function RevenueChart({ data }: { data: RevenuePoint[] }) {
+  if (!data.length || data.every((d) => d.revenue === 0 && d.orders === 0)) {
+    return (
+      <Typography variant="body2" color="text.secondary" sx={{ py: 6, textAlign: "center" }}>
+        No revenue yet — charts will populate as orders are captured.
+      </Typography>
+    );
+  }
+
   return (
     <ResponsiveContainer width="100%" height={280}>
-      <AreaChart data={DATA}>
+      <AreaChart data={data}>
         <defs>
           <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#00aeef" stopOpacity={0.45} />

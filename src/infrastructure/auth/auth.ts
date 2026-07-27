@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { verifySync } from "otplib";
 import { adminStore } from "@/infrastructure/persistence/store";
+import { authConfig } from "@/infrastructure/auth/auth.config";
 import type { AdminRole } from "@/domain/enums";
 import type { Permission } from "@/domain/permissions";
 
@@ -34,6 +35,7 @@ declare module "@auth/core/jwt" {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       id: "credentials",
@@ -42,13 +44,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
         mfaCode: { label: "MFA Code", type: "text" },
-        mfaPendingToken: { label: "MFA Pending", type: "text" },
       },
       async authorize(credentials) {
         const email = String(credentials?.email ?? "").trim().toLowerCase();
         const password = String(credentials?.password ?? "");
         const mfaCode = String(credentials?.mfaCode ?? "").trim();
-        const demoBypass = process.env.DEMO_MFA_BYPASS ?? "000000";
 
         if (!email || !password) return null;
 
@@ -84,14 +84,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (admin.mfaEnabled) {
           if (!mfaCode) {
-            // Signal MFA required via special error message pattern
             throw new Error("MFA_REQUIRED");
           }
-          const ok =
-            mfaCode === demoBypass ||
-            (admin.mfaSecret
-              ? verifySync({ token: mfaCode, secret: admin.mfaSecret }).valid
-              : false);
+          const ok = admin.mfaSecret
+            ? verifySync({ token: mfaCode, secret: admin.mfaSecret }).valid
+            : false;
           if (!ok) {
             adminStore.addLoginHistory({
               adminId: admin.id,
@@ -128,11 +125,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  session: { strategy: "jwt", maxAge: 60 * 60 * 8 },
-  pages: {
-    signIn: "/login",
-  },
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -151,12 +145,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session;
     },
-    authorized({ auth: session, request }) {
-      const path = request.nextUrl.pathname;
-      if (path.startsWith("/login") || path.startsWith("/api/auth")) return true;
-      return !!session?.user;
-    },
   },
-  trustHost: true,
-  secret: process.env.AUTH_SECRET ?? "hubsom-admin-dev-secret-change-me",
+  secret: process.env.AUTH_SECRET,
 });
