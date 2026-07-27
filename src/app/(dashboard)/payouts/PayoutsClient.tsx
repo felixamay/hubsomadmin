@@ -29,8 +29,8 @@ export function PayoutsClient({ payouts }: { payouts: Payout[] }) {
         rows={filtered}
         searchPlaceholder="Search by name, method…"
         columns={[
-          { key: "recipientName", label: "Recipient" },
-          { key: "recipientType", label: "Type" },
+          { key: "recipientName", label: "Recipient", mobile: "title" },
+          { key: "recipientType", label: "Type", mobile: "subtitle" },
           { key: "method", label: "Method" },
           { key: "accountDetails", label: "Account" },
           {

@@ -19,10 +19,10 @@ export function ModerationClient({ reports }: { reports: ContentReport[] }) {
         rows={reports}
         searchPlaceholder="Search by reporter, target, reason…"
         columns={[
-          { key: "reporterName", label: "Reporter" },
+          { key: "reporterName", label: "Reporter", mobile: "subtitle" },
           { key: "targetType", label: "Target Type" },
           { key: "targetId", label: "Target ID" },
-          { key: "reason", label: "Reason" },
+          { key: "reason", label: "Reason", mobile: "title" },
           {
             key: "status",
             label: "Status",

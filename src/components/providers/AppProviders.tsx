@@ -22,16 +22,29 @@ const theme = createTheme({
     h1: { fontWeight: 800, letterSpacing: "-0.03em" },
     h2: { fontWeight: 780, letterSpacing: "-0.02em" },
     h3: { fontWeight: 720, letterSpacing: "-0.02em" },
-    h4: { fontWeight: 700 },
-    h5: { fontWeight: 700 },
+    h4: {
+      fontWeight: 700,
+      "@media (max-width:600px)": { fontSize: "1.5rem" },
+    },
+    h5: {
+      fontWeight: 700,
+      "@media (max-width:600px)": { fontSize: "1.2rem" },
+    },
     h6: { fontWeight: 680 },
     button: { textTransform: "none", fontWeight: 650 },
   },
   shape: { borderRadius: 12 },
+  breakpoints: {
+    values: { xs: 0, sm: 480, md: 768, lg: 1024, xl: 1280 },
+  },
   components: {
     MuiButton: {
       styleOverrides: {
-        root: { borderRadius: 10, boxShadow: "none", ":hover": { boxShadow: "none" } },
+        root: {
+          borderRadius: 10,
+          boxShadow: "none",
+          ":hover": { boxShadow: "none" },
+        },
       },
     },
     MuiPaper: {
@@ -42,6 +55,18 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: { fontWeight: 600 },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: {
+          WebkitTapHighlightColor: "transparent",
+        },
       },
     },
   },

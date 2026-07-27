@@ -7,7 +7,7 @@ import type { SupportTicket } from "@/domain/entities";
 export function TicketActions({ ticket }: { ticket: SupportTicket }) {
   const { id, status } = ticket;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "open" && (
         <Button size="small" variant="contained" sx={{ bgcolor: "#0a3d5c" }}
           onClick={() => updateTicketAction(id, { status: "in_progress", assigneeId: "admin_super", assigneeName: "Admin" })}

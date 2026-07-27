@@ -7,7 +7,7 @@ import type { Auction } from "@/domain/entities";
 export function AuctionActions({ auction }: { auction: Auction }) {
   const { id, status, featured, disputeOpen } = auction;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "open" && (
         <Button size="small" variant="outlined" color="warning"
           onClick={() => updateAuctionAction(id, { status: "paused" })}

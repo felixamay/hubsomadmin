@@ -19,8 +19,8 @@ export function SupportClient({ tickets }: { tickets: SupportTicket[] }) {
         rows={tickets}
         searchPlaceholder="Search by subject, requester…"
         columns={[
-          { key: "subject", label: "Subject", render: (t) => t.subject.slice(0, 50) },
-          { key: "requesterName", label: "Requester" },
+          { key: "subject", label: "Subject", mobile: "title", render: (t) => t.subject.slice(0, 50) },
+          { key: "requesterName", label: "Requester", mobile: "subtitle" },
           { key: "audience", label: "Audience" },
           {
             key: "priority",

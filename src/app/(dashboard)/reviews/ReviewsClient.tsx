@@ -19,9 +19,9 @@ export function ReviewsClient({ reviews }: { reviews: Review[] }) {
         rows={reviews}
         searchPlaceholder="Search by author, target, comment…"
         columns={[
-          { key: "authorName", label: "Author" },
+          { key: "authorName", label: "Author", mobile: "subtitle" },
           { key: "targetType", label: "Type" },
-          { key: "targetName", label: "Target" },
+          { key: "targetName", label: "Target", mobile: "title" },
           {
             key: "rating",
             label: "Rating",

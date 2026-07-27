@@ -81,7 +81,7 @@ export function CategoryManager({ categories }: Props) {
               </Typography>
             </Box>
 
-            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+ <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="center" >
               <FormControlLabel
                 control={
                   <Switch

@@ -19,8 +19,8 @@ export function OrdersClient({ orders }: { orders: Order[] }) {
         rows={orders}
         searchPlaceholder="Search by buyer, city, status…"
         columns={[
-          { key: "id", label: "Order ID" },
-          { key: "buyerName", label: "Buyer" },
+          { key: "id", label: "Order ID", mobile: "title" },
+          { key: "buyerName", label: "Buyer", mobile: "subtitle" },
           { key: "buyerEmail", label: "Email" },
           { key: "shippingCity", label: "City" },
           {

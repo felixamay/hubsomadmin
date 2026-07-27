@@ -19,8 +19,8 @@ export function ProductsClient({ products }: { products: Product[] }) {
         rows={products}
         searchPlaceholder="Search by name, seller, category…"
         columns={[
-          { key: "name", label: "Product" },
-          { key: "sellerName", label: "Seller" },
+          { key: "name", label: "Product", mobile: "title" },
+          { key: "sellerName", label: "Seller", mobile: "subtitle" },
           { key: "category", label: "Category" },
           {
             key: "priceGhs",

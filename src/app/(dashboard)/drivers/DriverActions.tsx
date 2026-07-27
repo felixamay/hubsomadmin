@@ -8,7 +8,7 @@ export function DriverActions({ driver }: { driver: Driver }) {
   const { id, verificationStatus } = driver;
 
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {verificationStatus === "pending" && (
         <>
           <Button size="small" variant="contained" color="success"

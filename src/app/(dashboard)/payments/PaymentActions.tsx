@@ -7,7 +7,7 @@ import type { Payment } from "@/domain/entities";
 export function PaymentActions({ payment }: { payment: Payment }) {
   const { id, status } = payment;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "authorized" && (
         <Button size="small" variant="contained"
           sx={{ bgcolor: "#0a3d5c" }}

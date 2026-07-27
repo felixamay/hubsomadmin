@@ -19,8 +19,8 @@ export function StreamsClient({ streams }: { streams: LiveStream[] }) {
         rows={streams}
         searchPlaceholder="Search by title, seller…"
         columns={[
-          { key: "title", label: "Title" },
-          { key: "sellerName", label: "Seller" },
+          { key: "title", label: "Title", mobile: "title" },
+          { key: "sellerName", label: "Seller", mobile: "subtitle" },
           {
             key: "status",
             label: "Status",

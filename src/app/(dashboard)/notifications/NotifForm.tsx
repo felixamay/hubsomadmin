@@ -64,7 +64,7 @@ export function NotifForm({ notifications }: Props) {
               ))}
             </TextField>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap" alignItems="center">
             <Button variant="contained" sx={{ bgcolor: "#0a3d5c" }}
               onClick={handleSend}
               disabled={pending || !title.trim() || !body.trim()}
@@ -89,7 +89,7 @@ export function NotifForm({ notifications }: Props) {
                 <Typography fontWeight={700}>{n.title}</Typography>
                 <Typography variant="body2" color="text.secondary">{n.body}</Typography>
               </Box>
-              <Stack direction="row" spacing={1} alignItems="flex-start" flexWrap="wrap">
+ <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="flex-start" >
                 <Chip size="small" label={n.channel} />
                 <Chip size="small" label={n.audience} variant="outlined" />
                 <Chip size="small" label={n.status}

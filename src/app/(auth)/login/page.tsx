@@ -81,11 +81,13 @@ export default function LoginPage() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "grid",
         placeItems: "center",
-        px: 2,
-        py: 4,
+        px: { xs: 1.5, sm: 2 },
+        py: { xs: 2, sm: 4 },
+        pt: "calc(16px + var(--safe-top))",
+        pb: "calc(16px + var(--safe-bottom))",
         background:
           "radial-gradient(900px 500px at 10% 0%, rgba(0,174,239,0.22), transparent 55%), radial-gradient(800px 480px at 90% 10%, rgba(243,111,33,0.18), transparent 50%), linear-gradient(160deg,#06121f 0%,#0a3d5c 48%,#0d5278 100%)",
       }}
@@ -95,9 +97,10 @@ export default function LoginPage() {
         sx={{
           width: "100%",
           maxWidth: 440,
-          borderRadius: 3,
+          borderRadius: { xs: 2.5, sm: 3 },
           overflow: "hidden",
           border: "1px solid rgba(255,255,255,0.2)",
+          mx: "auto",
           animation: "rise 480ms ease",
           "@keyframes rise": {
             from: { opacity: 0, transform: "translateY(12px)" },

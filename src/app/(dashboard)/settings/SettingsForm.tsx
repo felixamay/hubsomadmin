@@ -34,8 +34,8 @@ export function SettingsForm({ settings }: { settings: PlatformSettings }) {
   }
 
   return (
-    <Box sx={{ maxWidth: 820 }}>
-      <Paper elevation={0} sx={{ p: 3, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
+    <Box sx={{ maxWidth: 820, width: "100%" }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
         <Typography variant="h6" fontWeight={750} sx={{ mb: 2.5 }}>
           Fees & Commission
         </Typography>
@@ -97,12 +97,12 @@ export function SettingsForm({ settings }: { settings: PlatformSettings }) {
         </Stack>
       </Paper>
 
-      <Paper elevation={0} sx={{ p: 3, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
         <Typography variant="h6" fontWeight={750} sx={{ mb: 2.5 }}>
           Tax Settings
         </Typography>
         <Stack spacing={2}>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap" alignItems="center">
             <FormControlLabel
               control={
                 <Switch
@@ -125,7 +125,7 @@ export function SettingsForm({ settings }: { settings: PlatformSettings }) {
         </Stack>
       </Paper>
 
-      <Paper elevation={0} sx={{ p: 3, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: "1px solid rgba(10,61,92,0.08)", borderRadius: 2, mb: 3 }}>
         <Typography variant="h6" fontWeight={750} sx={{ mb: 2.5 }}>
           Driver Verification
         </Typography>
@@ -161,7 +161,7 @@ export function SettingsForm({ settings }: { settings: PlatformSettings }) {
         </Stack>
       </Paper>
 
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap" alignItems="center">
         <Button
           variant="contained"
           sx={{ bgcolor: "#0a3d5c" }}

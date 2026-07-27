@@ -7,7 +7,7 @@ import type { Product } from "@/domain/entities";
 export function ProductActions({ product }: { product: Product }) {
   const { id, moderationStatus, featured } = product;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {moderationStatus === "pending" && (
         <>
           <Button size="small" variant="contained" color="success"

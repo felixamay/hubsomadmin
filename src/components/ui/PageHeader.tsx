@@ -33,8 +33,8 @@ export function StatCard({
         overflow: "hidden",
         transition: "transform 180ms ease, box-shadow 180ms ease",
         "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: "0 10px 28px rgba(10,61,92,0.08)",
+          transform: { md: "translateY(-2px)" },
+          boxShadow: { md: "0 10px 28px rgba(10,61,92,0.08)" },
         },
         "&::before": {
           content: '""',
@@ -47,14 +47,29 @@ export function StatCard({
         },
       }}
     >
-      <CardContent>
-        <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-          <Typography variant="body2" color="text.secondary" fontWeight={650}>
+      <CardContent sx={{ p: { xs: 1.5, sm: 2 }, "&:last-child": { pb: { xs: 1.5, sm: 2 } } }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={1}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            fontWeight={650}
+            sx={{ fontSize: { xs: "0.75rem", sm: "0.875rem" }, lineHeight: 1.3 }}
+          >
             {label}
           </Typography>
-          <TrendingUpIcon sx={{ fontSize: 18, color: accent, opacity: 0.7 }} />
+          <TrendingUpIcon sx={{ fontSize: { xs: 16, sm: 18 }, color: accent, opacity: 0.7, flexShrink: 0 }} />
         </Stack>
-        <Typography variant="h4" fontWeight={800} sx={{ mt: 1, mb: 0.5, letterSpacing: "-0.03em" }}>
+        <Typography
+          variant="h4"
+          fontWeight={800}
+          sx={{
+            mt: 0.75,
+            mb: 0.5,
+            letterSpacing: "-0.03em",
+            fontSize: { xs: "1.35rem", sm: "1.75rem", md: "2rem" },
+            wordBreak: "break-word",
+          }}
+        >
           {value}
         </Typography>
         {hint && (
@@ -78,24 +93,46 @@ export function PageHeader({
     <Box
       sx={{
         display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
         flexWrap: "wrap",
-        alignItems: "flex-end",
+        alignItems: { xs: "stretch", sm: "flex-end" },
         justifyContent: "space-between",
-        gap: 2,
-        mb: 3,
+        gap: { xs: 1.25, sm: 2 },
+        mb: { xs: 2, md: 3 },
       }}
     >
-      <Box>
-        <Typography variant="h4" fontWeight={800} letterSpacing="-0.03em">
+      <Box sx={{ minWidth: 0 }}>
+        <Typography
+          variant="h4"
+          fontWeight={800}
+          letterSpacing="-0.03em"
+          sx={{ fontSize: { xs: "1.35rem", sm: "1.75rem", md: "2.125rem" } }}
+        >
           {title}
         </Typography>
         {subtitle && (
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 0.5, fontSize: { xs: "0.8rem", sm: "0.875rem" } }}
+          >
             {subtitle}
           </Typography>
         )}
       </Box>
-      {actions}
+      {actions && (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1,
+            width: { xs: "100%", sm: "auto" },
+            "& > *": { flex: { xs: "1 1 auto", sm: "0 0 auto" } },
+          }}
+        >
+          {actions}
+        </Box>
+      )}
     </Box>
   );
 }

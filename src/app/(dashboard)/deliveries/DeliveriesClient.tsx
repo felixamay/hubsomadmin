@@ -26,9 +26,9 @@ export function DeliveriesClient({
         rows={deliveries}
         searchPlaceholder="Search by driver, customer…"
         columns={[
-          { key: "id", label: "Delivery ID" },
+          { key: "id", label: "Delivery ID", mobile: "title" },
           { key: "driverName", label: "Driver", render: (d) => d.driverName ?? "Unassigned" },
-          { key: "customerName", label: "Customer" },
+          { key: "customerName", label: "Customer", mobile: "subtitle" },
           { key: "sellerName", label: "Seller" },
           {
             key: "status",

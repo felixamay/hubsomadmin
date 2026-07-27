@@ -12,7 +12,7 @@ export function ReviewActions({ review }: { review: Review }) {
 
   return (
     <>
-      <Stack direction="row" spacing={0.5} flexWrap="wrap">
+      <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
         {status === "visible" && (
           <Button size="small" variant="outlined" color="warning"
             onClick={() => updateReviewAction(id, { status: "hidden" })}

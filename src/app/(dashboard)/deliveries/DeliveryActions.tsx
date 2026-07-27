@@ -14,7 +14,7 @@ export function DeliveryActions({ delivery, firstOnlineDriverId, firstOnlineDriv
   const { id, status } = delivery;
 
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {(status === "queued" || status === "offered") && firstOnlineDriverId && (
         <Button size="small" variant="contained" sx={{ bgcolor: "#00aeef", fontSize: 11 }}
           onClick={() => updateDeliveryAction(id, {

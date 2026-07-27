@@ -19,8 +19,8 @@ export function DriversClient({ drivers }: { drivers: Driver[] }) {
         rows={drivers}
         searchPlaceholder="Search by name, city, vehicle…"
         columns={[
-          { key: "fullName", label: "Name" },
-          { key: "email", label: "Email" },
+          { key: "fullName", label: "Name", mobile: "title" },
+          { key: "email", label: "Email", mobile: "subtitle" },
           { key: "phone", label: "Phone" },
           { key: "city", label: "City" },
           { key: "vehicleType", label: "Vehicle" },

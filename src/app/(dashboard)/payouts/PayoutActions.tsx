@@ -7,7 +7,7 @@ import type { Payout } from "@/domain/entities";
 export function PayoutActions({ payout }: { payout: Payout }) {
   const { id, status } = payout;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "pending" && (
         <>
           <Button size="small" variant="contained" sx={{ bgcolor: "#7cbf2c" }}

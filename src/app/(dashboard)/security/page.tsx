@@ -36,12 +36,12 @@ export default function SecurityPage() {
         {/* Active Sessions */}
         <Grid size={{ xs: 12, lg: 6 }}>
           <Paper elevation={0} sx={{ border: "1px solid rgba(10,61,92,0.08)" }}>
-            <Box sx={{ p: 2, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
               <Typography variant="h6" fontWeight={750}>
                 Admin Sessions ({sessions.filter((s) => !s.revokedAt).length} active)
               </Typography>
             </Box>
-            <TableContainer sx={{ maxHeight: 380 }}>
+            <TableContainer sx={{ maxHeight: 380, overflowX: "auto" }}>
               <Table size="small" stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -80,12 +80,12 @@ export default function SecurityPage() {
         {/* Login History */}
         <Grid size={{ xs: 12, lg: 6 }}>
           <Paper elevation={0} sx={{ border: "1px solid rgba(10,61,92,0.08)" }}>
-            <Box sx={{ p: 2, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
               <Typography variant="h6" fontWeight={750}>
                 Login History (last 30)
               </Typography>
             </Box>
-            <TableContainer sx={{ maxHeight: 380 }}>
+            <TableContainer sx={{ maxHeight: 380, overflowX: "auto" }}>
               <Table size="small" stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -126,7 +126,7 @@ export default function SecurityPage() {
         {/* Audit Log */}
         <Grid size={{ xs: 12, lg: 8 }}>
           <Paper elevation={0} sx={{ border: "1px solid rgba(10,61,92,0.08)" }}>
-            <Box sx={{ p: 2, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
               <Typography variant="h6" fontWeight={750}>
                 Audit Log (latest 40)
               </Typography>
@@ -165,7 +165,7 @@ export default function SecurityPage() {
         {/* Role Permissions */}
         <Grid size={{ xs: 12, lg: 4 }}>
           <Paper elevation={0} sx={{ border: "1px solid rgba(10,61,92,0.08)" }}>
-            <Box sx={{ p: 2, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2 }, borderBottom: "1px solid rgba(10,61,92,0.06)" }}>
               <Typography variant="h6" fontWeight={750}>
                 Role Permissions
               </Typography>

@@ -8,7 +8,7 @@ export function SellerActions({ seller }: { seller: Seller }) {
   const { id, status, verified } = seller;
 
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "pending" && (
         <>
           <Button size="small" variant="contained" color="success"

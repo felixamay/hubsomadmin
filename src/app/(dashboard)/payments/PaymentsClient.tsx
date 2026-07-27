@@ -19,8 +19,8 @@ export function PaymentsClient({ payments }: { payments: Payment[] }) {
         rows={payments}
         searchPlaceholder="Search by reference, customer, order…"
         columns={[
-          { key: "reference", label: "Reference" },
-          { key: "customerName", label: "Customer" },
+          { key: "reference", label: "Reference", mobile: "title" },
+          { key: "customerName", label: "Customer", mobile: "subtitle" },
           { key: "orderId", label: "Order ID" },
           { key: "method", label: "Method" },
           {

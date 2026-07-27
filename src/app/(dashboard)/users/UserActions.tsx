@@ -8,7 +8,7 @@ export function UserActions({ user }: { user: CustomerUser }) {
   const status = user.status;
 
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "active" && (
         <Button
           size="small"

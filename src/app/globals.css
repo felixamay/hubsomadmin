@@ -11,6 +11,11 @@
   --hubsom-lime: #7cbf2c;
   --background: var(--hubsom-mist);
   --foreground: var(--hubsom-ink);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --mobile-nav-h: 64px;
 }
 
 @theme inline {
@@ -34,6 +39,12 @@
 html,
 body {
   min-height: 100%;
+  min-height: 100dvh;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 body {
@@ -42,8 +53,12 @@ body {
     radial-gradient(900px 500px at 92% 0%, rgba(0, 174, 239, 0.16), transparent 52%),
     radial-gradient(700px 420px at 50% 100%, rgba(124, 191, 44, 0.07), transparent 50%),
     linear-gradient(180deg, #eef7fc 0%, #f5fbfe 42%, #e7f4fb 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  overflow-x: hidden;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
 }
 
 ::selection {
@@ -56,4 +71,31 @@ body {
   height: 100%;
   border-radius: 12px;
   z-index: 0;
+}
+
+/* Touch-friendly controls on small screens */
+@media (max-width: 899px) {
+  .MuiButton-root {
+    min-height: 40px;
+  }
+
+  .MuiButton-sizeSmall {
+    min-height: 36px;
+    font-size: 0.8125rem;
+  }
+
+  .MuiIconButton-root {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .MuiTableCell-root {
+    white-space: nowrap;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important; /* prevent iOS zoom */
+  }
 }

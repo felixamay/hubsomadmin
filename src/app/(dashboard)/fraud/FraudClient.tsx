@@ -19,10 +19,10 @@ export function FraudClient({ cases }: { cases: FraudCase[] }) {
         rows={cases}
         searchPlaceholder="Search by title, subject…"
         columns={[
-          { key: "title", label: "Title" },
+          { key: "title", label: "Title", mobile: "title" },
           { key: "type", label: "Type", render: (c) => c.type.replaceAll("_", " ") },
           { key: "subjectType", label: "Subject Type" },
-          { key: "subjectName", label: "Subject" },
+          { key: "subjectName", label: "Subject", mobile: "subtitle" },
           {
             key: "severity",
             label: "Severity",

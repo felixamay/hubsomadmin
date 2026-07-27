@@ -19,8 +19,8 @@ export function UsersClient({ users }: { users: CustomerUser[] }) {
         rows={users}
         searchPlaceholder="Search by name, email, city…"
         columns={[
-          { key: "name", label: "Name" },
-          { key: "email", label: "Email" },
+          { key: "name", label: "Name", mobile: "title" },
+          { key: "email", label: "Email", mobile: "subtitle" },
           { key: "phone", label: "Phone", render: (u) => u.phone ?? "—" },
           { key: "city", label: "City", render: (u) => u.city ?? "—" },
           { key: "role", label: "Role" },

@@ -59,7 +59,7 @@ export function AnalyticsCharts({ data }: { data: ChartData }) {
           <Typography variant="h6" sx={{ fontWeight: 750, mb: 2 }}>
             Revenue &amp; Orders (Last 7 Days)
           </Typography>
-          <ResponsiveContainer width="100%" height={260}>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart data={data.revenueByDay}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(10,61,92,0.06)" />
               <XAxis dataKey="day" tick={{ fontSize: 11 }} />
@@ -80,7 +80,7 @@ export function AnalyticsCharts({ data }: { data: ChartData }) {
           <Typography variant="h6" sx={{ fontWeight: 750, mb: 2 }}>
             Orders by Status
           </Typography>
-          <ResponsiveContainer width="100%" height={260}>
+          <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
                 data={data.ordersByStatus}

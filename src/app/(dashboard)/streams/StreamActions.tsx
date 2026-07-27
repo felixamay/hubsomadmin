@@ -7,7 +7,7 @@ import type { LiveStream } from "@/domain/entities";
 export function StreamActions({ stream }: { stream: LiveStream }) {
   const { id, status, featured } = stream;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "live" && (
         <Button size="small" variant="outlined" color="error"
           onClick={() => updateStreamAction(id, { status: "ended", endedAt: new Date().toISOString() })}

@@ -7,7 +7,7 @@ import type { FraudCase } from "@/domain/entities";
 export function FraudActions({ fraudCase }: { fraudCase: FraudCase }) {
   const { id, status } = fraudCase;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "open" && (
         <Button size="small" variant="contained" sx={{ bgcolor: "#0a3d5c" }}
           onClick={() => updateFraudAction(id, { status: "investigating" })}

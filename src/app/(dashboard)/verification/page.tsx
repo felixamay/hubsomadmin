@@ -21,7 +21,7 @@ export default function VerificationPage() {
         subtitle={`${pendingDrivers.length} drivers pending · ${allPendingDocs.length} documents to review`}
       />
 
-      <Stack direction="row" spacing={2} sx={{ mb: 3 }} flexWrap="wrap">
+      <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3, gap: 1 }}>
         {(["pending", "approved", "rejected", "more_docs_required"] as const).map((s) => {
           const count = drivers.filter((d) => d.verificationStatus === s).length;
           return (

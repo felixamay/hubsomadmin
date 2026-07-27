@@ -7,7 +7,7 @@ import type { Order } from "@/domain/entities";
 export function OrderActions({ order }: { order: Order }) {
   const { id, status } = order;
   return (
-    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {(status === "pending_payment" || status === "paid") && (
         <Button size="small" variant="outlined" color="error"
           onClick={() => updateOrderAction(id, { status: "cancelled" })}

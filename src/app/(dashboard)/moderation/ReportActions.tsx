@@ -7,7 +7,7 @@ import type { ContentReport } from "@/domain/entities";
 export function ReportActions({ report }: { report: ContentReport }) {
   const { id, status } = report;
   return (
-    <Stack direction="row" spacing={0.5}>
+    <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap">
       {status === "open" && (
         <>
           <Button size="small" variant="contained" sx={{ bgcolor: "#7cbf2c" }}

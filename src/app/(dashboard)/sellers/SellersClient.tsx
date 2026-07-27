@@ -19,8 +19,8 @@ export function SellersClient({ sellers }: { sellers: Seller[] }) {
         rows={sellers}
         searchPlaceholder="Search by name, city, email…"
         columns={[
-          { key: "name", label: "Store Name" },
-          { key: "ownerName", label: "Owner" },
+          { key: "name", label: "Store Name", mobile: "title" },
+          { key: "ownerName", label: "Owner", mobile: "subtitle" },
           { key: "ownerEmail", label: "Email" },
           { key: "city", label: "City" },
           {

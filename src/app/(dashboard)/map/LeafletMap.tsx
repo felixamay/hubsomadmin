@@ -34,7 +34,7 @@ export default function LeafletMap({
     <MapContainer
       center={ACCRA_CENTER}
       zoom={12}
-      style={{ height: "520px", width: "100%", borderRadius: 8 }}
+      style={{ height: "100%", width: "100%", borderRadius: 8, minHeight: 280 }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

@@ -19,8 +19,8 @@ export function AuctionsClient({ auctions }: { auctions: Auction[] }) {
         rows={auctions}
         searchPlaceholder="Search by product, seller…"
         columns={[
-          { key: "productName", label: "Product" },
-          { key: "sellerName", label: "Seller" },
+          { key: "productName", label: "Product", mobile: "title" },
+          { key: "sellerName", label: "Seller", mobile: "subtitle" },
           {
             key: "startingBidGhs",
             label: "Start Bid",

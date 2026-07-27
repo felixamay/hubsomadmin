@@ -99,7 +99,7 @@ export function PromoManager({ promotions }: Props) {
           >
             <Box sx={{ flex: 1 }}>
               <Typography fontWeight={700}>{promo.name}</Typography>
-              <Stack direction="row" spacing={1} sx={{ mt: 0.5 }} flexWrap="wrap">
+ <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mt: 0.5 }} >
                 <Chip size="small" label={promo.type.replaceAll("_", " ")} />
                 {promo.code && <Chip size="small" label={promo.code} variant="outlined" />}
                 {promo.discountPct && <Chip size="small" label={`${promo.discountPct}% off`} sx={{ bgcolor: "#f36f21", color: "#fff" }} />}
