@@ -37,7 +37,10 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Admin runs on **port 3001** so it can sit alongside Hubsom on 3000:
+
+- Hubsom Admin → [http://localhost:3001](http://localhost:3001)
+- Hubsom Marketplace → [http://localhost:3000](http://localhost:3000)
 
 ### Demo credentials
 
