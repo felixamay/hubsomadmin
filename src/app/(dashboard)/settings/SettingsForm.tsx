@@ -10,7 +10,6 @@ import {
   Typography,
   Switch,
   FormControlLabel,
-  Divider,
   Paper,
   Chip,
 } from "@mui/material";

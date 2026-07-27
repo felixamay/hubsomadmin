@@ -26,7 +26,6 @@ import type {
 import { nowIso, uid } from "@/lib/utils";
 
 declare global {
-  // eslint-disable-next-line no-var
   var __hubsomAdminDb: AdminDatabase | undefined;
 }
 

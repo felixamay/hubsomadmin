@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hubsom Admin
 
-## Getting Started
+Production-ready central administration portal for **Hubsom Marketplace** and **Huber Delivery**.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS 4** + **Material UI 7**
+- **Recharts** (analytics)
+- **OpenStreetMap / Leaflet** (live map)
+- **Auth.js (NextAuth v5)** with email/password + **TOTP MFA**
+- Role-based access control (RBAC)
+
+## Architecture
+
+Clean Architecture layout:
+
+```
+src/
+  domain/           # Entities, enums, permissions
+  application/      # Server actions / use-cases
+  infrastructure/   # Auth, in-memory seed store
+  components/       # Shared UI (shell, tables, charts, map)
+  app/
+    (auth)/login
+    (dashboard)/…   # All admin modules
+    api/…
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Data is seeded in-memory (aligned with Hubsom JSON models + Huber driver/verification models) so the portal runs without an external database. Swap `infrastructure/persistence/store.ts` for Postgres/Prisma when integrating live Hubsom/Huber backends.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quick start
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+### Demo credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | `admin@hubsom.com` | `HubsomAdmin2026!` |
+| Finance | `finance@hubsom.com` | `FinanceAdmin2026!` |
+| Support | `support@hubsom.com` | `SupportAdmin2026!` |
+| Moderation | `moderation@hubsom.com` | `ModAdmin2026!` |
+| Operations | `operations@hubsom.com` | `OpsAdmin2026!` |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**MFA:** accounts with MFA enabled accept authenticator TOTP **or** demo bypass `000000` (`DEMO_MFA_BYPASS`).
 
-## Deploy on Vercel
+Seeded TOTP secret (for authenticator apps): `JBSWY3DPEHPK3PXP`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Modules
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Area | Capabilities |
+|------|----------------|
+| Dashboard | Real-time KPIs for users, sellers, drivers, streams, auctions, revenue, payouts, tickets |
+| Users | Search, suspend/ban/unban/disable, purchase & order context |
+| Sellers | Approve/reject/suspend/ban, verification, revenue |
+| Drivers (Huber) | Verification gate (`canGoOnline` only when approved), suspend/ban |
+| Document Verification | ID, license, vehicle, insurance, photos, selfie review |
+| Payments | Platform-first capture, refunds, chargebacks |
+| Payouts | Seller + driver (MTN MoMo, Telecel Cash, AirtelTigo, bank) |
+| Orders / Deliveries | Cancel, refund, force-complete, reassign |
+| Map | OSM live drivers, pickups, dropoffs |
+| Live Streams / Auctions | Monitor, end, feature, pause, dispute |
+| Products / Categories | Moderation, featured, taxonomy |
+| Moderation / Reviews | Reports, abusive content, ratings |
+| Support | Customer/seller/driver tickets, escalate/resolve |
+| Promotions / Notifications | Coupons, flash sales, push/email campaigns |
+| Analytics / Fraud | Revenue, retention signals, fraud cases |
+| Security / Settings | Sessions, login history, audit logs, fees & pricing rules |
+
+## Roles
+
+- `super_admin` — full access  
+- `finance_admin` — payments, payouts, analytics  
+- `support_admin` — users, orders, tickets  
+- `moderation_admin` — content, fraud, streams  
+- `operations_admin` — drivers, verification, deliveries, map, promotions  
+
+See `src/domain/permissions/index.ts`.
+
+## Integration notes
+
+Aligned with:
+
+- [hubsom](https://github.com/felixamay/hubsom) — marketplace types (GHS, sellers, orders, streams, auctions, shipments)
+- [Huber-](https://github.com/felixamay/Huber-) — driver verification, wallets, MoMo payouts, delivery lifecycle
+
+Wire production data via Hubsom APIs + Huber `free-backend` / Hubers `/v1/delivery-offers` using env:
+
+```
+HUBSOM_API_BASE_URL=
+HUBERS_API_BASE_URL=
+HUBERS_API_KEY=
+```
+
+## Scripts
+
+```bash
+npm run dev      # development
+npm run build    # production build
+npm run start    # serve build
+npm run lint     # ESLint
+```
+
+## Security
+
+- MFA for privileged admins
+- JWT sessions (8h)
+- RBAC permission checks (extend middleware for per-route gates)
+- Audit log for sensitive mutations
+- Session revoke + login history in Security module
+
+## License
+
+Private — Hubsom / Felix Amesimeku

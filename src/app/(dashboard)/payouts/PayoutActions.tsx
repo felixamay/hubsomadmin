@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button, Stack, Tabs, Tab, Box } from "@mui/material";
 import { updatePayoutAction } from "@/application/services/admin-actions";
 import type { Payout } from "@/domain/entities";

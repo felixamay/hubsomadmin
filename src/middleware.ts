@@ -2,6 +2,6 @@ export { auth as middleware } from "@/auth";
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|brand|api/health).*)",
+    "/((?!_next/static|_next/image|favicon.ico|brand/|api/health|.*\\.svg$).*)",
   ],
 };
