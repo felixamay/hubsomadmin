@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --hubsom-ink: #06121f;
+  --hubsom-forest: #0a3d5c;
+  --hubsom-leaf: #00aeef;
+  --hubsom-mint: #d7f1fb;
+  --hubsom-mist: #eef7fc;
+  --hubsom-gold: #f7941d;
+  --hubsom-live: #f36f21;
+  --hubsom-lime: #7cbf2c;
+  --background: var(--hubsom-mist);
+  --foreground: var(--hubsom-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-hubsom-ink: var(--hubsom-ink);
+  --color-hubsom-forest: var(--hubsom-forest);
+  --color-hubsom-leaf: var(--hubsom-leaf);
+  --color-hubsom-mint: var(--hubsom-mint);
+  --color-hubsom-mist: var(--hubsom-mist);
+  --color-hubsom-gold: var(--hubsom-gold);
+  --color-hubsom-live: var(--hubsom-live);
+  --color-hubsom-lime: var(--hubsom-lime);
+  --font-sans: var(--font-plus-jakarta);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1100px 560px at 8% -8%, rgba(247, 148, 29, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 92% 0%, rgba(0, 174, 239, 0.16), transparent 52%),
+    radial-gradient(700px 420px at 50% 100%, rgba(124, 191, 44, 0.07), transparent 50%),
+    linear-gradient(180deg, #eef7fc 0%, #f5fbfe 42%, #e7f4fb 100%);
+  color: var(--foreground);
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+}
+
+::selection {
+  background: rgba(247, 148, 29, 0.35);
+  color: var(--hubsom-ink);
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  z-index: 0;
+}
