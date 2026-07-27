@@ -46,7 +46,7 @@ export function DataTable<T extends { id: string }>({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
 
-  const safeRows = Array.isArray(rows) ? rows : [];
+  const safeRows = useMemo(() => (Array.isArray(rows) ? rows : []), [rows]);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
