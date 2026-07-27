@@ -18,7 +18,10 @@ const theme = createTheme({
     text: { primary: "#06121f", secondary: "#3a5568" },
   },
   typography: {
-    fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif',
+    fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+    allVariants: {
+      fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+    },
     h1: { fontWeight: 800, letterSpacing: "-0.03em" },
     h2: { fontWeight: 780, letterSpacing: "-0.02em" },
     h3: { fontWeight: 720, letterSpacing: "-0.02em" },
@@ -66,6 +69,12 @@ const theme = createTheme({
       styleOverrides: {
         html: {
           WebkitTapHighlightColor: "transparent",
+        },
+        body: {
+          fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+        },
+        "*": {
+          fontFamily: 'inherit',
         },
       },
     },

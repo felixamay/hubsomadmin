@@ -7,15 +7,17 @@ import {
   Alert,
   Box,
   Button,
-  Card,
-  CardContent,
+  CircularProgress,
+  Divider,
+  IconButton,
+  InputAdornment,
   Stack,
   TextField,
   Typography,
-  Chip,
 } from "@mui/material";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,6 +25,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [mfaCode, setMfaCode] = useState("");
   const [mfaRequired, setMfaRequired] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -39,13 +42,13 @@ export default function LoginPage() {
         });
         const data = await pre.json();
         if (!pre.ok || !data.ok) {
-          setError(data.error ?? "Invalid credentials");
+          setError(data.error ?? "Invalid email or password");
           setLoading(false);
           return;
         }
         if (data.mfaRequired) {
           setMfaRequired(true);
-          setError("Two-factor authentication required. Enter your authenticator code.");
+          setError(null);
           setLoading(false);
           return;
         }
@@ -59,7 +62,7 @@ export default function LoginPage() {
       });
 
       if (res?.error) {
-        setError(mfaRequired ? "Invalid MFA code." : "Unable to sign in.");
+        setError(mfaRequired ? "Invalid authentication code." : "Unable to sign in.");
         setLoading(false);
         return;
       }
@@ -83,133 +86,318 @@ export default function LoginPage() {
       sx={{
         minHeight: "100dvh",
         display: "grid",
-        placeItems: "center",
-        px: { xs: 1.5, sm: 2 },
-        py: { xs: 2, sm: 4 },
-        pt: "calc(16px + var(--safe-top))",
-        pb: "calc(16px + var(--safe-bottom))",
-        background:
-          "radial-gradient(900px 500px at 10% 0%, rgba(0,174,239,0.22), transparent 55%), radial-gradient(800px 480px at 90% 10%, rgba(243,111,33,0.18), transparent 50%), linear-gradient(160deg,#06121f 0%,#0a3d5c 48%,#0d5278 100%)",
+        gridTemplateColumns: { xs: "1fr", md: "1.05fr 0.95fr" },
+        fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
       }}
     >
-      <Card
-        elevation={0}
+      {/* Brand panel */}
+      <Box
         sx={{
-          width: "100%",
-          maxWidth: 440,
-          borderRadius: { xs: 2.5, sm: 3 },
+          display: { xs: "none", md: "flex" },
+          flexDirection: "column",
+          justifyContent: "space-between",
+          p: { md: 6, lg: 8 },
+          color: "#fff",
+          position: "relative",
           overflow: "hidden",
-          border: "1px solid rgba(255,255,255,0.2)",
-          mx: "auto",
-          animation: "rise 480ms ease",
-          "@keyframes rise": {
-            from: { opacity: 0, transform: "translateY(12px)" },
-            to: { opacity: 1, transform: "translateY(0)" },
+          background:
+            "linear-gradient(165deg, #06121f 0%, #0a3d5c 42%, #0d5278 78%, #0a3d5c 100%)",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(720px 420px at 12% 18%, rgba(0,174,239,0.28), transparent 60%), radial-gradient(640px 380px at 88% 82%, rgba(243,111,33,0.22), transparent 55%)",
+            pointerEvents: "none",
           },
         }}
       >
-        <Box sx={{ px: 3, pt: 3, pb: 1.5, background: "linear-gradient(135deg,#0a3d5c,#14618a)" }}>
-          <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack direction="row" spacing={1.5} alignItems="center" sx={{ position: "relative", zIndex: 1 }}>
+          <Box
+            sx={{
+              width: 44,
+              height: 44,
+              borderRadius: 1.5,
+              background: "linear-gradient(135deg,#00aeef,#f36f21)",
+              display: "grid",
+              placeItems: "center",
+              fontWeight: 800,
+              fontSize: 20,
+              letterSpacing: "-0.04em",
+            }}
+          >
+            H
+          </Box>
+          <Box>
+            <Typography sx={{ fontWeight: 800, fontSize: "1.15rem", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
+              Hubsom
+            </Typography>
+            <Typography sx={{ fontSize: "0.75rem", opacity: 0.7, letterSpacing: "0.04em", textTransform: "uppercase" }}>
+              Admin
+            </Typography>
+          </Box>
+        </Stack>
+
+        <Box sx={{ position: "relative", zIndex: 1, maxWidth: 440 }}>
+          <Typography
+            sx={{
+              fontWeight: 800,
+              fontSize: { md: "2.4rem", lg: "2.85rem" },
+              letterSpacing: "-0.04em",
+              lineHeight: 1.12,
+              mb: 2,
+            }}
+          >
+            Operate Hubsom & Huber from one secure console.
+          </Typography>
+          <Typography sx={{ color: "rgba(255,255,255,0.72)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 400 }}>
+            Marketplace, deliveries, payouts, live streams, and verification — controlled with role-based access.
+          </Typography>
+        </Box>
+
+        <Typography sx={{ position: "relative", zIndex: 1, fontSize: "0.8rem", color: "rgba(255,255,255,0.45)" }}>
+          © {new Date().getFullYear()} Hubsom · Confidential
+        </Typography>
+      </Box>
+
+      {/* Form panel */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          px: { xs: 2, sm: 4 },
+          py: { xs: 4, sm: 6 },
+          pt: { xs: "calc(32px + var(--safe-top))", md: 6 },
+          pb: { xs: "calc(32px + var(--safe-bottom))", md: 6 },
+          background: {
+            xs: "linear-gradient(180deg, #06121f 0%, #0a3d5c 38%, #eef7fc 38%)",
+            md: "#f7fbfd",
+          },
+        }}
+      >
+        <Box sx={{ width: "100%", maxWidth: 420 }}>
+          {/* Mobile brand */}
+          <Stack
+            direction="row"
+            spacing={1.25}
+            alignItems="center"
+            sx={{ display: { xs: "flex", md: "none" }, mb: 3, color: "#fff" }}
+          >
             <Box
               sx={{
-                width: 44,
-                height: 44,
-                borderRadius: 2,
+                width: 40,
+                height: 40,
+                borderRadius: 1.5,
                 background: "linear-gradient(135deg,#00aeef,#f36f21)",
                 display: "grid",
                 placeItems: "center",
-                color: "#fff",
-                fontWeight: 900,
-                fontSize: 20,
+                fontWeight: 800,
+                fontSize: 18,
               }}
             >
               H
             </Box>
-            <Box>
-              <Typography variant="h5" fontWeight={800} color="#fff">
-                Hubsom Admin
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.75)" }}>
-                Secure access · Marketplace & Huber
-              </Typography>
-            </Box>
-          </Stack>
-        </Box>
-        <CardContent sx={{ p: 3 }}>
-          <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-            <Chip size="small" icon={<LockOutlinedIcon />} label="RBAC" />
-            <Chip size="small" icon={<ShieldOutlinedIcon />} label="MFA ready" color="secondary" />
+            <Typography sx={{ fontWeight: 800, letterSpacing: "-0.03em" }}>Hubsom Admin</Typography>
           </Stack>
 
-          {error && (
-            <Alert
-              severity={mfaRequired && !error.toLowerCase().includes("invalid") ? "info" : "error"}
-              sx={{ mb: 2 }}
-            >
-              {error}
-            </Alert>
-          )}
+          <Box
+            sx={{
+              bgcolor: "#fff",
+              borderRadius: 3,
+              border: "1px solid rgba(10,61,92,0.08)",
+              boxShadow: {
+                xs: "0 18px 50px rgba(6,18,31,0.18)",
+                md: "0 12px 40px rgba(10,61,92,0.06)",
+              },
+              px: { xs: 2.5, sm: 3.5 },
+              py: { xs: 3, sm: 4 },
+            }}
+          >
+            <Stack spacing={0.75} sx={{ mb: 3 }}>
+              <Typography
+                component="h1"
+                sx={{
+                  fontWeight: 800,
+                  fontSize: { xs: "1.5rem", sm: "1.75rem" },
+                  letterSpacing: "-0.03em",
+                  color: "#06121f",
+                }}
+              >
+                {mfaRequired ? "Verify identity" : "Sign in"}
+              </Typography>
+              <Typography sx={{ color: "#5a7386", fontSize: "0.925rem", lineHeight: 1.5 }}>
+                {mfaRequired
+                  ? "Enter the 6-digit code from your authenticator app to continue."
+                  : "Use your administrator credentials to access the Hubsom control center."}
+              </Typography>
+            </Stack>
 
-          <Box component="form" onSubmit={onSubmit}>
-            <Stack spacing={2}>
-              <TextField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setMfaRequired(false);
+            {error && (
+              <Alert
+                severity="error"
+                sx={{
+                  mb: 2.5,
+                  borderRadius: 2,
+                  "& .MuiAlert-message": { fontFamily: "inherit" },
                 }}
-                required
-                fullWidth
-                autoComplete="username"
-                disabled={mfaRequired}
-                autoFocus
-              />
-              <TextField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setMfaRequired(false);
-                }}
-                required
-                fullWidth
-                autoComplete="current-password"
-                disabled={mfaRequired}
-              />
-              {mfaRequired && (
-                <TextField
-                  label="Authenticator code"
-                  value={mfaCode}
-                  onChange={(e) => setMfaCode(e.target.value)}
-                  required
-                  fullWidth
-                  autoFocus
-                  placeholder="6-digit code"
-                  inputProps={{ maxLength: 8, inputMode: "numeric" }}
-                />
-              )}
-              <Button type="submit" variant="contained" size="large" disabled={loading} fullWidth>
-                {loading ? "Signing in…" : mfaRequired ? "Verify & continue" : "Sign in"}
-              </Button>
-              {mfaRequired && (
+              >
+                {error}
+              </Alert>
+            )}
+
+            <Box component="form" onSubmit={onSubmit} noValidate>
+              <Stack spacing={2.25}>
+                {!mfaRequired ? (
+                  <>
+                    <TextField
+                      label="Work email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      fullWidth
+                      autoComplete="username"
+                      autoFocus
+                      placeholder="you@company.com"
+                      InputLabelProps={{ shrink: true }}
+                      sx={fieldSx}
+                    />
+                    <TextField
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      fullWidth
+                      autoComplete="current-password"
+                      InputLabelProps={{ shrink: true }}
+                      sx={fieldSx}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label={showPassword ? "Hide password" : "Show password"}
+                              onClick={() => setShowPassword((v) => !v)}
+                              edge="end"
+                              size="small"
+                            >
+                              {showPassword ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </>
+                ) : (
+                  <TextField
+                    label="Authentication code"
+                    value={mfaCode}
+                    onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    required
+                    fullWidth
+                    autoFocus
+                    placeholder="••••••"
+                    inputProps={{
+                      maxLength: 6,
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
+                      style: {
+                        letterSpacing: "0.35em",
+                        fontWeight: 700,
+                        fontSize: "1.25rem",
+                        textAlign: "center",
+                      },
+                    }}
+                    InputLabelProps={{ shrink: true }}
+                    sx={fieldSx}
+                  />
+                )}
+
                 <Button
-                  variant="text"
-                  onClick={() => {
-                    setMfaRequired(false);
-                    setMfaCode("");
-                    setError(null);
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  disabled={loading || (!mfaRequired && (!email || !password)) || (mfaRequired && mfaCode.length < 6)}
+                  fullWidth
+                  sx={{
+                    mt: 0.5,
+                    py: 1.4,
+                    borderRadius: 2,
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    letterSpacing: "-0.01em",
+                    bgcolor: "#0a3d5c",
+                    "&:hover": { bgcolor: "#072f47" },
+                    "&.Mui-disabled": { bgcolor: "rgba(10,61,92,0.35)", color: "#fff" },
                   }}
                 >
-                  Use a different account
+                  {loading ? (
+                    <CircularProgress size={22} sx={{ color: "#fff" }} />
+                  ) : mfaRequired ? (
+                    "Continue"
+                  ) : (
+                    "Sign in to Admin"
+                  )}
                 </Button>
-              )}
+
+                {mfaRequired && (
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      setMfaRequired(false);
+                      setMfaCode("");
+                      setError(null);
+                    }}
+                    sx={{ color: "#5a7386", fontWeight: 600 }}
+                  >
+                    Back to email & password
+                  </Button>
+                )}
+              </Stack>
+            </Box>
+
+            <Divider sx={{ my: 3, borderColor: "rgba(10,61,92,0.08)" }} />
+
+            <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+              <LockOutlinedIcon sx={{ fontSize: 16, color: "#8aa0b2" }} />
+              <Typography sx={{ fontSize: "0.75rem", color: "#8aa0b2", textAlign: "center" }}>
+                Encrypted session · Role-based access · Audit logged
+              </Typography>
             </Stack>
           </Box>
-        </CardContent>
-      </Card>
+
+          <Typography
+            sx={{
+              mt: 2.5,
+              textAlign: "center",
+              fontSize: "0.75rem",
+              color: { xs: "rgba(10,61,92,0.55)", md: "#8aa0b2" },
+            }}
+          >
+            Authorized personnel only. All access is monitored.
+          </Typography>
+        </Box>
+      </Box>
     </Box>
   );
 }
+
+const fieldSx = {
+  "& .MuiOutlinedInput-root": {
+    borderRadius: 2,
+    bgcolor: "#fbfcfd",
+    fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+    "& fieldset": { borderColor: "rgba(10,61,92,0.14)" },
+    "&:hover fieldset": { borderColor: "rgba(10,61,92,0.28)" },
+    "&.Mui-focused fieldset": { borderColor: "#0a3d5c", borderWidth: 1.5 },
+  },
+  "& .MuiInputLabel-root": {
+    fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+    fontWeight: 600,
+  },
+  "& .MuiInputBase-input": {
+    fontFamily: 'inherit',
+    py: 1.35,
+  },
+};

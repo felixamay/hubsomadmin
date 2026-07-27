@@ -55,10 +55,20 @@ body {
     linear-gradient(180deg, #eef7fc 0%, #f5fbfe 42%, #e7f4fb 100%);
   background-attachment: fixed;
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
+}
+
+button,
+input,
+textarea,
+select,
+.MuiTypography-root,
+.MuiButton-root,
+.MuiInputBase-root {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif !important;
 }
 
 ::selection {
