@@ -98,7 +98,7 @@ function currentTitle(pathname: string) {
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
   const [open, setOpen] = useState(false);
   const { data } = useSession();
   const role = data?.user?.role as AdminRole | undefined;

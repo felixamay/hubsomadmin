@@ -20,7 +20,7 @@ import type { Driver } from "@/domain/entities";
 
 export function DocumentReview({ driver }: { driver: Driver }) {
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"), { noSsr: true });
   const [open, setOpen] = useState(false);
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
   const [notes, setNotes] = useState("");

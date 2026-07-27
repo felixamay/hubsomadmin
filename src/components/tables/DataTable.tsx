@@ -44,12 +44,14 @@ export function DataTable<T extends { id: string }>({
 }) {
   const [q, setQ] = useState("");
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
+
+  const safeRows = Array.isArray(rows) ? rows : [];
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return rows;
-    return rows.filter((row) =>
+    if (!query) return safeRows;
+    return safeRows.filter((row) =>
       columns.some((col) => {
         const raw = col.searchValue
           ? col.searchValue(row)
@@ -57,7 +59,7 @@ export function DataTable<T extends { id: string }>({
         return raw.toLowerCase().includes(query);
       }),
     );
-  }, [rows, columns, q]);
+  }, [safeRows, columns, q]);
 
   const titleCol = columns.find((c) => c.mobile === "title") ?? columns[0];
   const subtitleCol = columns.find((c) => c.mobile === "subtitle");
@@ -214,7 +216,7 @@ export function DataTable<T extends { id: string }>({
 
       <Box sx={{ px: 2, py: 1.25, borderTop: "1px solid rgba(10,61,92,0.06)" }}>
         <Typography variant="caption" color="text.secondary">
-          Showing {filtered.length} of {rows.length}
+          Showing {filtered.length} of {safeRows.length}
         </Typography>
       </Box>
     </Paper>
