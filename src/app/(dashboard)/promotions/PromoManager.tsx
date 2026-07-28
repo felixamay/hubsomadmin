@@ -37,6 +37,15 @@ const FALLBACK_PLACEMENTS: HubsomAdminCatalog["placements"] = [
   { id: "product", label: "Product pages", description: "Product detail pages" },
 ];
 
+type HubsomLinkStatus = {
+  ok: boolean;
+  baseUrl: string;
+  hasApiKey: boolean;
+  catalogOk?: boolean;
+  promotionsOk?: boolean;
+  error?: string;
+};
+
 export function PromoManager() {
   const [catalog, setCatalog] = useState<HubsomAdminCatalog | null>(null);
   const [items, setItems] = useState<HubsomPromotion[]>([]);
@@ -46,6 +55,7 @@ export function PromoManager() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [linkStatus, setLinkStatus] = useState<HubsomLinkStatus | null>(null);
   const [productFilter, setProductFilter] = useState("");
 
   const needsCategories = form.placements.includes("category");
@@ -69,10 +79,14 @@ export function PromoManager() {
     setLoading(true);
     setError(null);
     try {
-      const [catRes, listRes] = await Promise.all([
+      const [statusRes, catRes, listRes] = await Promise.all([
+        fetch("/api/hubsom/status"),
         fetch("/api/hubsom/catalog"),
         fetch("/api/hubsom/promotions"),
       ]);
+      const statusData = (await statusRes.json()) as HubsomLinkStatus;
+      setLinkStatus(statusData);
+
       const catData = await catRes.json();
       const listData = await listRes.json();
       if (!catRes.ok) {
@@ -87,7 +101,10 @@ export function PromoManager() {
         setItems(listData.promotions ?? []);
       }
     } catch {
-      setError("Could not reach Hubsom admin APIs — check HUBSOM_API_BASE_URL + HUBSOM_ADMIN_API_KEY");
+      setError(
+        "Could not reach Hubsom admin APIs — start Hubsom on port 3000 and check HUBSOM_API_BASE_URL + HUBSOM_ADMIN_API_KEY",
+      );
+      setLinkStatus(null);
     } finally {
       setLoading(false);
     }
@@ -221,6 +238,26 @@ export function PromoManager() {
         </Button>
       </Stack>
 
+      {linkStatus && !linkStatus.ok && (
+        <Alert severity="warning" sx={{ mb: 2, borderRadius: 2 }}>
+          <Typography variant="subtitle2" fontWeight={700}>
+            Hubsom is not reachable
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 0.5 }}>
+            {linkStatus.error ??
+              "Start Hubsom (branch cursor/hubsom-live-commerce-8a7a) on the URL below, with the same HUBSOM_ADMIN_API_KEY, then refresh."}
+          </Typography>
+          <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+            Target: {linkStatus.baseUrl || "(HUBSOM_API_BASE_URL not set)"} · API key:{" "}
+            {linkStatus.hasApiKey ? "set" : "missing"}
+          </Typography>
+        </Alert>
+      )}
+      {linkStatus?.ok && (
+        <Typography variant="caption" color="success.main" display="block" sx={{ mb: 1.5 }}>
+          Connected to Hubsom at {linkStatus.baseUrl}
+        </Typography>
+      )}
       {error && (
         <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }} onClose={() => setError(null)}>
           {error}
