@@ -97,10 +97,13 @@ Aligned with:
 Wire production data via Hubsom APIs + Huber `free-backend` / Hubers `/v1/delivery-offers` using env:
 
 ```
-HUBSOM_API_BASE_URL=
+HUBSOM_API_BASE_URL=http://127.0.0.1:3000
+HUBSOM_ADMIN_API_KEY=shared-secret-here
 HUBERS_API_BASE_URL=
 HUBERS_API_KEY=
 ```
+
+Promotions (`/promotions`) proxy to Hubsom `/api/admin/catalog` + `/api/admin/promotions` with `X-Hubsom-Admin-Key`. See `docs/HUBSOM_PROMOTIONS.md`.
 
 ## Scripts
 
