@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 56" width="80" height="56">
+  <rect width="80" height="56" rx="6" fill="#f36f21"/>
+  <path d="M40 10 L64 20 L64 36 Q64 48 40 52 Q16 48 16 36 L16 20 Z" fill="#fff" opacity=".2"/>
+  <text x="40" y="34" font-family="sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">INS</text>
+</svg>
