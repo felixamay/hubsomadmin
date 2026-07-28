@@ -72,7 +72,8 @@ Operational data starts empty (no demo users/sellers/drivers). Persistence lives
 | Products / Categories | Moderation, featured, taxonomy |
 | Moderation / Reviews | Reports, abusive content, ratings |
 | Support | Customer/seller/driver tickets, escalate/resolve |
-| Promotions / Notifications | Coupons, flash sales, push/email campaigns |
+| Promotions | Hubsom storefront promos via `/api/admin/promotions` (placements + targeting) |
+| Notifications | Push/email campaigns |
 | Analytics / Fraud | Revenue, retention signals, fraud cases |
 | Security / Settings | Sessions, login history, audit logs, fees & pricing rules |
 
